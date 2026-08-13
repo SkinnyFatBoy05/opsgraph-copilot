@@ -1,0 +1,41 @@
+{
+  "rule_id": "MA000004-retail-level-1-ordinary-2026",
+  "award_code": "MA000004",
+  "version": "2026.07.01",
+  "effective_from": "2026-07-01",
+  "effective_to": null,
+  "verification_status": "verified_official",
+  "supported_classifications": ["retail_level_1"],
+  "supported_employment_types": ["full_time", "part_time", "casual"],
+  "supported_day_types": ["weekday", "weekday_evening", "saturday", "sunday", "public_holiday"],
+  "base_rate_cents": {
+    "retail_level_1": 2781
+  },
+  "multipliers": {
+    "full_time_part_time": {
+      "weekday": "1.00",
+      "weekday_evening": "1.25",
+      "saturday": "1.25",
+      "sunday": "1.50",
+      "public_holiday": "2.25"
+    },
+    "casual": {
+      "weekday": "1.25",
+      "weekday_evening": "1.50",
+      "saturday": "1.50",
+      "sunday": "1.75",
+      "public_holiday": "2.50"
+    }
+  },
+  "source_ids": ["FWC-MA000004-2026", "FWO-MA000004-PAYGUIDE-2026"],
+  "exclusions": [
+    "junior employees",
+    "apprentices and trainees",
+    "overtime",
+    "shiftworkers",
+    "allowances",
+    "leave and public-holiday substitution agreements",
+    "shifts crossing a penalty-rate boundary",
+    "overnight shifts"
+  ]
+}

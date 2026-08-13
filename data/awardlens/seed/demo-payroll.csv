@@ -1,0 +1,9 @@
+record_id,employee_id,shift_date,start_time,end_time,break_minutes,classification,employment_type,paid_gross_cents,is_public_holiday
+SHIFT-001,SYN-001,2026-07-06,09:00,17:00,30,retail_level_1,full_time,20858,false
+SHIFT-002,SYN-002,2026-07-04,09:00,14:00,0,retail_level_1,part_time,16000,false
+SHIFT-003,SYN-003,2026-07-05,10:00,14:00,0,retail_level_1,part_time,15000,false
+SHIFT-004,SYN-004,2026-12-25,09:00,15:00,0,retail_level_1,full_time,35000,true
+SHIFT-005,SYN-005,2026-07-07,18:00,22:00,0,retail_level_1,part_time,13000,false
+SHIFT-006,SYN-006,2026-07-08,17:00,20:00,0,retail_level_1,full_time,9000,false
+SHIFT-007,SYN-007,2026-07-09,09:00,17:00,30,retail_level_2,full_time,22000,false
+SHIFT-008,SYN-008,2026-07-10,09:00,17:00,30,retail_level_1,casual,25000,false

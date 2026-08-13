@@ -1,0 +1,33 @@
+{
+  "manifest_version": 1,
+  "last_checked": "2026-08-08",
+  "sources": [
+    {
+      "id": "FWC-MA000004-2026",
+      "title": "General Retail Industry Award 2020 [MA000004]",
+      "url": "https://awards.fairwork.gov.au/MA000004.html",
+      "publisher": "Fair Work Commission",
+      "checked_on": "2026-08-08",
+      "supports": ["adult minimum hourly rate", "ordinary-hours penalty multipliers", "classification scope"]
+    },
+    {
+      "id": "FWO-MA000004-PAYGUIDE-2026",
+      "title": "Pay Guide - General Retail Industry Award",
+      "url": "https://calculate.fairwork.gov.au/Download/AwardSummary?awardCode=ma000004&fileType=pdf",
+      "publisher": "Fair Work Ombudsman",
+      "checked_on": "2026-08-08",
+      "effective_from": "2026-07-01"
+    }
+  ],
+  "rule_files": [
+    {
+      "path": "retail-level-1-2026.json",
+      "sha256": "4e0aad9bdbde3ecf47f4fa9602f23d5e9f499ba469ea2f80c02f40a4e4f0af98",
+      "verification_status": "verified_official",
+      "supported_classifications": ["retail_level_1"],
+      "supported_employment_types": ["full_time", "part_time", "casual"],
+      "supported_day_types": ["weekday", "weekday_evening", "saturday", "sunday", "public_holiday"]
+    }
+  ],
+  "disclaimer": "Educational synthetic-data demonstration only. Always verify the current award and obtain qualified advice for real payroll decisions."
+}

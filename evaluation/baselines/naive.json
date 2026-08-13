@@ -1,0 +1,10 @@
+{
+  "name": "naive-single-prompt",
+  "status": "not_executed",
+  "provider": null,
+  "model": null,
+  "generated_at": null,
+  "metrics": {},
+  "claims": [],
+  "note": "Run this baseline and the guarded graph under recorded identical conditions before claiming an improvement."
+}

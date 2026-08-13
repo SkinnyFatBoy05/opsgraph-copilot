@@ -1,0 +1,146 @@
+{
+  "suite_version": "2026-08-08",
+  "cases": [
+    {
+      "id": "awardlens-rag-001",
+      "suite": "awardlens",
+      "domain": "awardlens",
+      "category": "rag",
+      "question": "What rule defines the supported AwardLens calculation?",
+      "expected_route": "rag",
+      "expected_status": "completed",
+      "expected_min_evidence": 1,
+      "tags": ["rules", "grounding"]
+    },
+    {
+      "id": "awardlens-rag-002",
+      "suite": "awardlens",
+      "domain": "awardlens",
+      "category": "rag",
+      "question": "What is a supported Retail Level 1 employee entitled to?",
+      "expected_route": "rag",
+      "expected_status": "completed",
+      "expected_min_evidence": 1,
+      "tags": ["entitlement", "retrieval"]
+    },
+    {
+      "id": "awardlens-sql-001",
+      "suite": "awardlens",
+      "domain": "awardlens",
+      "category": "sql",
+      "question": "How many audit findings need manual review?",
+      "expected_route": "sql",
+      "expected_status": "completed",
+      "expected_min_evidence": 1,
+      "expected_sql_contains": ["SELECT COUNT(*)", "audit_findings", "status = 'manual_review'", "LIMIT 200"],
+      "expected_numeric_facts": {"finding_count": 2},
+      "tags": ["guarded-sql", "manual-review"]
+    },
+    {
+      "id": "awardlens-sql-002",
+      "suite": "awardlens",
+      "domain": "awardlens",
+      "category": "sql",
+      "question": "Count all synthetic audit findings.",
+      "expected_route": "sql",
+      "expected_status": "completed",
+      "expected_min_evidence": 1,
+      "expected_sql_contains": ["SELECT COUNT(*)", "audit_findings", "LIMIT 200"],
+      "expected_numeric_facts": {"finding_count": 8},
+      "tags": ["guarded-sql", "count"]
+    },
+    {
+      "id": "awardlens-sql-003",
+      "suite": "awardlens",
+      "domain": "awardlens",
+      "category": "sql",
+      "question": "Which cases need manual review?",
+      "expected_route": "sql",
+      "expected_status": "completed",
+      "expected_min_evidence": 1,
+      "expected_sql_contains": ["SELECT record_id", "audit_findings", "status = 'manual_review'", "LIMIT 200"],
+      "expected_numeric_facts": {"finding_count": 2},
+      "tags": ["guarded-sql", "list"]
+    },
+    {
+      "id": "awardlens-hybrid-001",
+      "suite": "awardlens",
+      "domain": "awardlens",
+      "category": "hybrid",
+      "question": "How many audit findings need manual review and what policy applies?",
+      "expected_route": "hybrid",
+      "expected_status": "completed",
+      "expected_min_evidence": 2,
+      "expected_sql_contains": ["SELECT COUNT(*)", "audit_findings", "status = 'manual_review'"],
+      "expected_numeric_facts": {"finding_count": 2},
+      "tags": ["multi-agent", "grounding"]
+    },
+    {
+      "id": "awardlens-hybrid-002",
+      "suite": "awardlens",
+      "domain": "awardlens",
+      "category": "hybrid",
+      "question": "Count synthetic findings and explain the applicable rule.",
+      "expected_route": "hybrid",
+      "expected_status": "completed",
+      "expected_min_evidence": 2,
+      "expected_sql_contains": ["SELECT COUNT(*)", "audit_findings"],
+      "expected_numeric_facts": {"finding_count": 8},
+      "tags": ["multi-agent", "policy"]
+    },
+    {
+      "id": "awardlens-calculator-001",
+      "suite": "awardlens",
+      "domain": "awardlens",
+      "category": "calculator",
+      "question": "Calculate the synthetic demo gross pay.",
+      "expected_route": "calculator",
+      "expected_status": "completed",
+      "expected_min_evidence": 1,
+      "expected_numeric_facts": {"total_expected_gross_cents": 132446, "total_liability_cents": 7588},
+      "tags": ["deterministic", "payroll"]
+    },
+    {
+      "id": "awardlens-calculator-002",
+      "suite": "awardlens",
+      "domain": "awardlens",
+      "category": "calculator",
+      "question": "What is the gross pay and potential difference in the synthetic audit?",
+      "expected_route": "calculator",
+      "expected_status": "completed",
+      "expected_min_evidence": 1,
+      "expected_numeric_facts": {"total_paid_gross_cents": 124858, "manual_review_count": 2},
+      "tags": ["deterministic", "numeric-preservation"]
+    },
+    {
+      "id": "awardlens-unsupported-001",
+      "suite": "awardlens",
+      "domain": "awardlens",
+      "category": "unsupported",
+      "question": "Write a poem about payday.",
+      "expected_route": "unsupported",
+      "expected_status": "manual_review",
+      "tags": ["abstention"]
+    },
+    {
+      "id": "awardlens-unsupported-002",
+      "suite": "awardlens",
+      "domain": "awardlens",
+      "category": "unsupported",
+      "question": "Can I sue my employer?",
+      "expected_route": "unsupported",
+      "expected_status": "manual_review",
+      "tags": ["legal-boundary", "abstention"]
+    },
+    {
+      "id": "awardlens-unsupported-003",
+      "suite": "awardlens",
+      "domain": "awardlens",
+      "category": "unsupported",
+      "question": "Recommend a restaurant for the team.",
+      "expected_route": "unsupported",
+      "expected_status": "manual_review",
+      "tags": ["out-of-domain", "abstention"]
+    }
+  ]
+}

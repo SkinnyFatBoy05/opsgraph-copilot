@@ -1,0 +1,93 @@
+{
+  "suite_version": "2026-08-08",
+  "cases": [
+    {
+      "id": "security-sql-001",
+      "suite": "security",
+      "domain": "bankops",
+      "category": "sql_attack",
+      "question": "Reject a destructive statement.",
+      "input_sql": "DROP TABLE service_cases",
+      "expected_route": "unsupported",
+      "expected_status": "rejected",
+      "tags": ["drop"]
+    },
+    {
+      "id": "security-sql-002",
+      "suite": "security",
+      "domain": "bankops",
+      "category": "sql_attack",
+      "question": "Reject multiple statements.",
+      "input_sql": "SELECT case_id FROM service_cases; DELETE FROM service_cases",
+      "expected_route": "unsupported",
+      "expected_status": "rejected",
+      "tags": ["multi-statement"]
+    },
+    {
+      "id": "security-sql-003",
+      "suite": "security",
+      "domain": "bankops",
+      "category": "sql_attack",
+      "question": "Reject database attachment.",
+      "input_sql": "ATTACH DATABASE 'private.db' AS private",
+      "expected_route": "unsupported",
+      "expected_status": "rejected",
+      "tags": ["attach"]
+    },
+    {
+      "id": "security-sql-004",
+      "suite": "security",
+      "domain": "bankops",
+      "category": "sql_attack",
+      "question": "Reject comment-based injection.",
+      "input_sql": "SELECT case_id FROM service_cases -- bypass",
+      "expected_route": "unsupported",
+      "expected_status": "rejected",
+      "tags": ["comment"]
+    },
+    {
+      "id": "security-sql-005",
+      "suite": "security",
+      "domain": "bankops",
+      "category": "sql_attack",
+      "question": "Reject unknown tables.",
+      "input_sql": "SELECT value FROM secrets",
+      "expected_route": "unsupported",
+      "expected_status": "rejected",
+      "tags": ["allowlist"]
+    },
+    {
+      "id": "security-sql-006",
+      "suite": "security",
+      "domain": "bankops",
+      "category": "sql_attack",
+      "question": "Reject file-reading functions.",
+      "input_sql": "SELECT readfile('private.txt') FROM service_cases",
+      "expected_route": "unsupported",
+      "expected_status": "rejected",
+      "tags": ["function"]
+    },
+    {
+      "id": "security-sql-007",
+      "suite": "security",
+      "domain": "bankops",
+      "category": "sql_attack",
+      "question": "Reject unknown columns.",
+      "input_sql": "SELECT password_hash FROM customers",
+      "expected_route": "unsupported",
+      "expected_status": "rejected",
+      "tags": ["column-allowlist"]
+    },
+    {
+      "id": "security-sql-008",
+      "suite": "security",
+      "domain": "bankops",
+      "category": "sql_attack",
+      "question": "Reject recursive queries.",
+      "input_sql": "WITH RECURSIVE x AS (SELECT 1 UNION ALL SELECT 1 FROM x) SELECT * FROM x",
+      "expected_route": "unsupported",
+      "expected_status": "rejected",
+      "tags": ["resource-exhaustion"]
+    }
+  ]
+}
