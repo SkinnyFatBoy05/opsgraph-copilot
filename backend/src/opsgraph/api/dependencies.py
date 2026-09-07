@@ -1,6 +1,7 @@
 """Lazy, explicit dependency wiring for each application instance."""
 
 import asyncio
+import sqlite3
 from hashlib import sha256
 from pathlib import Path
 from tempfile import gettempdir
@@ -65,6 +66,19 @@ class AppServices:
         await self.graph_service()
         assert self._retrieval is not None
         return await self._retrieval.ingest((document,))
+
+    async def check_readiness(self) -> None:
+        """Check bundled data and initialize the demo before accepting traffic."""
+        database = self.settings.sqlite_database_path or (
+            Path(__file__).resolve().parents[4] / "data" / "bankops" / "demo.sqlite"
+        )
+        connection = sqlite3.connect(f"{database.resolve().as_uri()}?mode=ro", uri=True, timeout=1)
+        try:
+            for table, columns in BANKOPS_SEMANTIC_SCHEMA.tables.items():
+                connection.execute(f"SELECT {', '.join(columns)} FROM {table} LIMIT 1").fetchone()
+        finally:
+            connection.close()
+        await self.graph_service()
 
     def cache_key(self, domain: str, question: str) -> str:
         material = (

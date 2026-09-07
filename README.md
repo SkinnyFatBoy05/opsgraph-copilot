@@ -9,13 +9,13 @@ OpsGraph is one deliberately compact AI engineering project with two synthetic d
 
 The default configuration is free: it uses a deterministic fake model, local FAISS, and SQLite. Ollama and Amazon Bedrock are optional adapters. All records are synthetic, and AwardLens is an educational prototype—not legal, payroll, financial, or compliance advice.
 
-## Design previews
+## Running application
 
-The application ships with responsive BankOps and AwardLens workspaces. These are design previews; run the project to exercise the live workflows.
+Screenshots captured from the running application using the bundled synthetic data and deterministic provider. Both workspaces also have mobile browser coverage.
 
-![BankOps desktop workspace](design/concepts/bankops-desktop.png)
+![BankOps completed investigation with SQL and policy evidence](design/screenshots/bankops-live.png)
 
-![AwardLens desktop workspace](design/concepts/awardlens-desktop.png)
+![AwardLens synthetic payroll audit](design/screenshots/awardlens-live.png)
 
 ## Fastest way to see everything
 
@@ -36,6 +36,8 @@ Open <http://localhost:8080>. Try these requests:
 When finished, stop the demo with `docker compose down`.
 
 The complete click-by-click walkthrough is in [docs/DEMO_SCRIPT.md](docs/DEMO_SCRIPT.md). The architecture and capability map links each production-AI concept to its code and tests in [docs/CONCEPT_MAP.md](docs/CONCEPT_MAP.md).
+
+For a restricted, synthetic-only demo configuration, use `docker compose -f compose.demo.yml up --build -d --wait`. This disables upload and run-history routes, keeps the API off host ports, and adds resource limits. See [demo operations and release checks](docs/DEMO_OPERATIONS.md) before exposing a hosted instance.
 
 ## Local development
 

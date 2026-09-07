@@ -1,5 +1,6 @@
 """FastAPI application factory."""
 
+import logging
 from uuid import uuid4
 
 from fastapi import FastAPI, Request
@@ -11,7 +12,7 @@ from opsgraph.api.routes.chat import router as chat_router
 from opsgraph.api.routes.awardlens import local_router as awardlens_local_router
 from opsgraph.api.routes.awardlens import public_router as awardlens_public_router
 from opsgraph.api.routes.config import router as config_router
-from opsgraph.api.routes.evaluations import router as evaluations_router
+from opsgraph.api.routes.evaluations import latest_evaluation, router as evaluations_router
 from opsgraph.api.routes.ingest import router as ingest_router
 from opsgraph.api.routes.runs import router as runs_router
 from opsgraph.config import Settings, get_settings
@@ -27,6 +28,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         title="OpsGraph API",
         version=__version__,
         docs_url=None if resolved_settings.profile == "aws-demo" else "/docs",
+        redoc_url=None if resolved_settings.profile == "aws-demo" else "/redoc",
+        openapi_url=None if resolved_settings.profile == "aws-demo" else "/openapi.json",
     )
     app.state.settings = resolved_settings
     app.state.services = AppServices(resolved_settings)
@@ -73,7 +76,13 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         return {"status": "alive"}
 
     @app.get("/health/ready", tags=["health"])
-    async def readiness() -> dict[str, str]:
+    async def readiness():
+        try:
+            await app.state.services.check_readiness()
+            await latest_evaluation(resolved_settings)
+        except Exception:
+            logging.getLogger(__name__).exception("Demo readiness check failed")
+            return JSONResponse(status_code=503, content={"status": "not_ready"})
         return {"status": "ready"}
 
     app.include_router(config_router)
