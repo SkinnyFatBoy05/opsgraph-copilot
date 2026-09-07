@@ -42,6 +42,7 @@ jobs:
           cache-dependency-path: frontend/package-lock.json
       - run: npm ci
       - run: npm test -- --run
+      - run: npm audit --audit-level=high
       - run: npm run build
 
   browser-e2e:
@@ -107,3 +108,9 @@ jobs:
       - run: curl --fail --silent --show-error --output /dev/null http://127.0.0.1:8080/
       - if: always()
         run: docker compose down
+      - run: docker compose -f compose.demo.yml config --quiet
+      - run: docker compose -f compose.demo.yml up --build -d --wait
+      - run: python scripts/smoke_demo.py
+      - run: test "$(docker compose -f compose.demo.yml exec -T api id -u)" = "10001"
+      - if: always()
+        run: docker compose -f compose.demo.yml down

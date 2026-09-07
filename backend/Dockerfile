@@ -14,5 +14,8 @@ COPY data /app/data
 COPY evaluation/reports/deterministic /app/evaluation/reports/deterministic
 RUN uv sync --frozen --no-dev --extra aws
 
+RUN useradd --system --uid 10001 --create-home opsgraph
+USER 10001:10001
+
 EXPOSE 8000
-CMD ["uv", "run", "--no-sync", "uvicorn", "opsgraph.api.app:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD [".venv/bin/uvicorn", "opsgraph.api.app:app", "--host", "0.0.0.0", "--port", "8000", "--limit-concurrency", "32", "--timeout-keep-alive", "5"]
