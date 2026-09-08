@@ -30,6 +30,10 @@ const context = await browser.newContext({
 const page = await context.newPage();
 await page.route("**/api/v1/config", (route) => route.fulfill({ json: publicConfig }));
 
+const flowIntro = await fs.readFile(new URL("./flow-intro.html", import.meta.url), "utf8");
+await page.setContent(flowIntro, { waitUntil: "load" });
+await page.waitForTimeout(5200);
+
 await page.goto("http://127.0.0.1:5173", { waitUntil: "networkidle" });
 await page.waitForTimeout(1800);
 
