@@ -6,8 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit -p tsconfig.app.json && tsc --noEmit -p tsconfig.node.json && vite build",
+    "capture:showcase": "node scripts/capture-redesign.mjs",
     "test": "vitest",
     "test:e2e": "playwright test",
+    "record:showcase": "node scripts/record-showcase.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

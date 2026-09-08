@@ -17,6 +17,8 @@ Screenshots captured from the running application using the bundled synthetic da
 
 ![AwardLens synthetic payroll audit](design/screenshots/awardlens-live.png)
 
+![Deterministic evaluation metrics and release gate](design/screenshots/evaluations-live.png)
+
 ## Fastest way to see everything
 
 With Git and Docker Desktop (or Docker Engine with Compose) running:
