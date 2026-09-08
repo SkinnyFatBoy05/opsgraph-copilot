@@ -10,5 +10,6 @@ describe("OpsGraph application shell", () => {
 
     expect(screen.getByRole("button", { name: /Bank Operations/i })).toBeVisible();
     expect(screen.getByRole("button", { name: /AwardLens AU/i })).toBeVisible();
+    expect(screen.getByRole("button", { name: /Evaluations/i })).toBeVisible();
   });
 });

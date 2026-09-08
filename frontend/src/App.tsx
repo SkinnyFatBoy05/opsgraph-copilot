@@ -1,4 +1,3 @@
-import { Menu } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { apiClient } from "./api/client";
@@ -25,7 +24,6 @@ function Wordmark() {
 
 function App() {
   const [active, setActive] = useState<WorkspaceName>("bankops");
-  const [mobileMenu, setMobileMenu] = useState(false);
   const [config, setConfig] = useState<RuntimeConfig | null>(null);
 
   useEffect(() => {
@@ -36,27 +34,18 @@ function App() {
 
   return (
     <div className="app-shell">
-      <header className="app-header">
+      <header className="mobile-header">
         <Wordmark />
-        <button
-          type="button"
-          className="mobile-menu-button"
-          aria-label="Toggle workspace navigation"
-          aria-expanded={mobileMenu}
-          onClick={() => setMobileMenu((value) => !value)}
-        >
-          <Menu aria-hidden="true" size={25} />
-        </button>
       </header>
-      <div className={`navigation-shell ${mobileMenu ? "navigation-shell-open" : ""}`}>
+      <aside className="navigation-shell">
+        <div className="desktop-wordmark">
+          <Wordmark />
+        </div>
         <DomainSwitcher
           active={active}
-          onChange={(workspace) => {
-            setActive(workspace);
-            setMobileMenu(false);
-          }}
+          onChange={setActive}
         />
-      </div>
+      </aside>
       <div className="workspace-shell">
         <div hidden={active !== "bankops"}><BankOpsWorkspace config={config} /></div>
         <div hidden={active !== "awardlens"}><AwardLensWorkspace config={config} /></div>

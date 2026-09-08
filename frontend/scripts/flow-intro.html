@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      :root {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: #071633;
+        background: #f7faff;
+      }
+      * { box-sizing: border-box; }
+      body {
+        width: 1440px;
+        height: 1000px;
+        margin: 0;
+        overflow: hidden;
+        background:
+          radial-gradient(circle at 9% 3%, rgba(79, 177, 255, 0.36), transparent 410px),
+          linear-gradient(145deg, #f3f9ff, #ffffff 48%, #f6f9fd);
+      }
+      .scene { position: relative; width: 100%; height: 100%; padding: 62px 72px; }
+      .brand { display: flex; align-items: center; gap: 12px; font-size: 23px; font-weight: 750; letter-spacing: -0.04em; }
+      .brand svg { width: 34px; height: 34px; fill: rgba(255,255,255,.6); stroke: #0866ee; stroke-width: 1.7; }
+      .intro { margin-top: 52px; text-align: center; animation: title-in 550ms cubic-bezier(.22,.74,.22,1) both; }
+      .intro h1 { margin: 0; font-size: 49px; line-height: 1; letter-spacing: -0.055em; }
+      .intro p { margin: 13px 0 0; color: #63708a; font-size: 18px; }
+      .flow { position: absolute; top: 285px; right: 72px; left: 72px; height: 470px; }
+      .connectors { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+      .connector { fill: none; stroke: rgba(8,102,238,.28); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 7 10; animation: flow-line 750ms linear infinite; }
+      .connector-main { stroke: rgba(8,102,238,.42); }
+      .connector-review { stroke: rgba(182,104,0,.35); }
+      .node {
+        position: absolute;
+        top: 66px;
+        min-height: 150px;
+        padding: 20px;
+        border: 1px solid rgba(255,255,255,.92);
+        border-radius: 22px;
+        background: rgba(255,255,255,.76);
+        box-shadow: 0 22px 55px rgba(30,64,113,.11), inset 0 0 0 1px rgba(102,141,196,.12), inset 0 1px 0 white;
+        backdrop-filter: blur(24px) saturate(155%);
+        opacity: 0;
+        transform: translateY(18px) scale(.97);
+      }
+      .node h2 { margin: 15px 0 6px; font-size: 21px; letter-spacing: -0.035em; }
+      .node p { margin: 0; color: #63708a; font-size: 15px; line-height: 21px; }
+      .step { width: 30px; height: 30px; display: grid; place-items: center; border-radius: 50%; background: rgba(8,102,238,.1); color: #0866ee; font-size: 13px; font-weight: 800; }
+      .question { left: 24px; width: 210px; animation: node-in 650ms .7s cubic-bezier(.22,.74,.22,1) forwards; }
+      .router { left: 274px; width: 230px; animation: node-in 650ms 1.8s cubic-bezier(.22,.74,.22,1) forwards; }
+      .tools { left: 544px; top: 29px; width: 270px; min-height: 224px; animation: node-in 650ms 3.1s cubic-bezier(.22,.74,.22,1) forwards; }
+      .verify { left: 854px; width: 210px; animation: node-in 650ms 5s cubic-bezier(.22,.74,.22,1) forwards; }
+      .answer { left: 1104px; width: 210px; animation: node-in 650ms 6.25s cubic-bezier(.22,.74,.22,1) forwards; }
+      .answer .step { color: #008f83; background: #e6f7f4; }
+      .tool-list { margin-top: 13px; display: grid; gap: 8px; }
+      .tool { min-height: 42px; padding: 0 11px; display: flex; align-items: center; gap: 8px; border: 1px solid rgba(8,102,238,.15); border-radius: 12px; background: #f7faff; color: #263653; font-size: 14px; font-weight: 650; }
+      .check { width: 18px; height: 18px; display: grid; place-items: center; border-radius: 50%; background: #e6f7f4; color: #008f83; font-size: 11px; }
+      .review {
+        position: absolute;
+        top: 300px;
+        left: 274px;
+        width: 320px;
+        min-height: 82px;
+        padding: 16px 18px;
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        border: 1px solid rgba(182,104,0,.18);
+        border-radius: 18px;
+        background: rgba(255,248,236,.88);
+        box-shadow: 0 14px 34px rgba(107,70,18,.07), inset 0 1px 0 white;
+        opacity: 0;
+        transform: translateY(12px);
+        animation: review-in 650ms 4.25s cubic-bezier(.22,.74,.22,1) forwards;
+      }
+      .review strong { display: block; margin-bottom: 3px; color: #8f5500; font-size: 15px; }
+      .review span { color: #7c684b; font-size: 14px; }
+      .review-icon { width: 34px; height: 34px; display: grid; flex: 0 0 auto; place-items: center; border-radius: 50%; background: #fff0d7; color: #b66800; font-weight: 800; }
+      .principle {
+        position: absolute;
+        right: 0;
+        bottom: 4px;
+        left: 0;
+        color: #63708a;
+        font-size: 17px;
+        font-weight: 600;
+        text-align: center;
+        opacity: 0;
+        animation: principle-in 650ms 7.3s ease forwards;
+      }
+      .principle strong { color: #071633; }
+      @keyframes title-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+      @keyframes node-in { to { opacity: 1; transform: translateY(0) scale(1); } }
+      @keyframes review-in { to { opacity: 1; transform: translateY(0); } }
+      @keyframes principle-in { to { opacity: 1; } }
+      @keyframes flow-line { to { stroke-dashoffset: -34; } }
+    </style>
+  </head>
+  <body>
+    <main class="scene">
+      <div class="brand">
+        <svg viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M16 3 27 9v14l-11 6-11-6V9l11-6Z" />
+          <path d="m5 9 11 7 11-7M16 16v13" />
+        </svg>
+        <span>OpsGraph</span>
+      </div>
+      <header class="intro">
+        <h1>How OpsGraph works</h1>
+        <p>Every request moves through bounded, inspectable software controls.</p>
+      </header>
+      <section class="flow" aria-label="OpsGraph guarded workflow">
+        <svg class="connectors" viewBox="0 0 1296 470" preserveAspectRatio="none" aria-hidden="true">
+          <path class="connector connector-main" d="M234 141 H274" />
+          <path class="connector connector-main" d="M504 141 H544" />
+          <path class="connector connector-main" d="M814 141 H854" />
+          <path class="connector connector-main" d="M1064 141 H1104" />
+          <path class="connector connector-review" d="M389 216 V276 H434 V300" />
+        </svg>
+
+        <article class="node question">
+          <span class="step">1</span>
+          <h2>Ask</h2>
+          <p>A real operational question enters the workflow.</p>
+        </article>
+
+        <article class="node router">
+          <span class="step">2</span>
+          <h2>Guarded router</h2>
+          <p>Classifies intent, limits tools, and enforces budgets.</p>
+        </article>
+
+        <article class="node tools">
+          <span class="step">3</span>
+          <h2>Approved tools only</h2>
+          <div class="tool-list">
+            <div class="tool"><span class="check">✓</span>Policy retrieval</div>
+            <div class="tool"><span class="check">✓</span>Allowlisted read-only SQL</div>
+          </div>
+        </article>
+
+        <article class="node verify">
+          <span class="step">4</span>
+          <h2>Verify</h2>
+          <p>Checks citations, numbers, and supporting evidence.</p>
+        </article>
+
+        <article class="node answer">
+          <span class="step">✓</span>
+          <h2>Grounded answer</h2>
+          <p>Returns evidence, data, SQL, and an inspectable trace.</p>
+        </article>
+
+        <aside class="review">
+          <span class="review-icon">!</span>
+          <div>
+            <strong>Unsupported or uncertain</strong>
+            <span>Route to human review instead of guessing.</span>
+          </div>
+        </aside>
+
+        <p class="principle">The model interprets language. <strong>Application code owns permission.</strong></p>
+      </section>
+    </main>
+  </body>
+</html>
