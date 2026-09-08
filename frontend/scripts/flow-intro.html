@@ -27,9 +27,14 @@
       .intro p { margin: 13px 0 0; color: #63708a; font-size: 18px; }
       .flow { position: absolute; top: 285px; right: 72px; left: 72px; height: 470px; }
       .connectors { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-      .connector { fill: none; stroke: rgba(8,102,238,.28); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 7 10; animation: flow-line 750ms linear infinite; }
+      .connector { fill: none; stroke: rgba(8,102,238,.28); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 7 10; opacity: 0; }
       .connector-main { stroke: rgba(8,102,238,.42); }
       .connector-review { stroke: rgba(182,104,0,.35); }
+      .connector-ask-router { animation: connector-in 420ms 1.8s ease forwards, flow-line 750ms 1.8s linear infinite; }
+      .connector-router-tools { animation: connector-in 420ms 3.1s ease forwards, flow-line 750ms 3.1s linear infinite; }
+      .connector-human-review { animation: connector-in 420ms 4.25s ease forwards, flow-line 750ms 4.25s linear infinite; }
+      .connector-tools-verify { animation: connector-in 420ms 5s ease forwards, flow-line 750ms 5s linear infinite; }
+      .connector-verify-answer { animation: connector-in 420ms 6.25s ease forwards, flow-line 750ms 6.25s linear infinite; }
       .node {
         position: absolute;
         top: 66px;
@@ -93,6 +98,7 @@
       @keyframes node-in { to { opacity: 1; transform: translateY(0) scale(1); } }
       @keyframes review-in { to { opacity: 1; transform: translateY(0); } }
       @keyframes principle-in { to { opacity: 1; } }
+      @keyframes connector-in { to { opacity: 1; } }
       @keyframes flow-line { to { stroke-dashoffset: -34; } }
     </style>
   </head>
@@ -111,11 +117,11 @@
       </header>
       <section class="flow" aria-label="OpsGraph guarded workflow">
         <svg class="connectors" viewBox="0 0 1296 470" preserveAspectRatio="none" aria-hidden="true">
-          <path class="connector connector-main" d="M234 141 H274" />
-          <path class="connector connector-main" d="M504 141 H544" />
-          <path class="connector connector-main" d="M814 141 H854" />
-          <path class="connector connector-main" d="M1064 141 H1104" />
-          <path class="connector connector-review" d="M389 216 V276 H434 V300" />
+          <path class="connector connector-main connector-ask-router" d="M234 141 H274" />
+          <path class="connector connector-main connector-router-tools" d="M504 141 H544" />
+          <path class="connector connector-main connector-tools-verify" d="M814 141 H854" />
+          <path class="connector connector-main connector-verify-answer" d="M1064 141 H1104" />
+          <path class="connector connector-review connector-human-review" d="M389 216 V276 H434 V300" />
         </svg>
 
         <article class="node question">
